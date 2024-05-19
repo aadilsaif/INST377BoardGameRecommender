@@ -1,95 +1,43 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import styles from '../styles/Home.module.css'
+import { Button } from '@mantine/core';
+import Image from 'next/image';
+import Link from 'next/link';
 
-export default function Home() {
+async function getTopGames() {
+  var xml2js = require('xml2js');
+  var parser = new xml2js.Parser();
+  const response = await fetch('https://boardgamegeek.com/xmlapi2/hot?type=boardgame');
+  const xmldata = await response.text();
+  const data = await parser.parseStringPromise(xmldata);
+  return data.items.item.slice(0, 20);
+}
+
+
+export default async function Home() {
+  const games = await getTopGames();
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    <  div className={styles.page}>
+      <h1>Welcome to the Board Game Recommendation Engine</h1>
+      <Button variant="gradient" gradient={{ from: 'teal', to: 'cyan', deg: 265 }} size="xl" radius="md" fullWidth>Click Here to Take Our Quiz</Button>
+      <h2>Here are the top 20 hottest board games right now!</h2>
+      <div className={styles.grid} hidden>
+        {games?.map((game) => {
+            return <GameCard key={game.$.id} game={game} />;
+          })}
       </div>
+    </div>
+  )
+}
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+function GameCard(game) {
+  return (
+    <Link href={`https://boardgamegeek.com/boardgame/${game.game.$.id}`}>
+      <div className={styles.card}>
+        <Image src={game.game.thumbnail[0].$.value} alt={game.game.name[0].$.value} width={200} height={300}/>
+        <h3>{game.game.name[0].$.value}</h3>
       </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+    </Link>
+    
+  )
 }
