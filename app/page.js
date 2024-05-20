@@ -21,7 +21,7 @@ export default async function Home() {
       <h1>Welcome to the Board Game Recommendation Engine</h1>
       <Button variant="gradient" gradient={{ from: 'teal', to: 'cyan', deg: 265 }} size="xl" radius="md" fullWidth>Click Here to Take Our Quiz</Button>
       <h2>Here are the top 20 hottest board games right now!</h2>
-      <div className={styles.grid} hidden>
+      <div className={styles.grid}>
         {games?.map((game) => {
             return <GameCard key={game.$.id} game={game} />;
           })}
