@@ -29,3 +29,82 @@ https://inst-377-board-game-recommender.vercel.app/
 ## Target Browsers: 
 Web: Firefox and Chrome
 
+## Developer Manual:
+### Installation Guide:
+#### Prerequisites
+Make sure you have the following requirements:
+- Operating System: Linux, macOS, or Windows
+- Node.js: Version 14 or higher
+- PostgreSQL: Version 12 or higher
+- Python: Verison 3.8 higher
+## Installation Steps
+1. Clone the Repository
+2. Set up Environment Variables
+3. Install Node.js Dependencies
+4. Set up the Database
+## Running the Application on a Server
+1. Start the Development Server
+   `npm run dev`
+2. Build and Start the Production Server
+   `npm run build`
+   `npm start`
+## API Documentation 
+- GET /api/games
+  Description: Retrieves a list of ttop 20 hottest boards games
+  Response: JSON array ofgame objects
+- POST /api/quiz
+  Description: Submits user preference them the quiz
+  `Example:
+  {
+    "players": 2,
+    "difficulty": 3.0,
+    "score": 8.0,
+    "preferences": {
+    "bluff": 1,
+    "teams": "",
+    "dice": 2,
+    "eliminate": 1,
+    "memory": 3
+  }
+}`
+- Response: JSON object with recommedation games
+  `Example:
+  {
+  "recommendations": [
+    {
+      "id": "12345",
+      "name": "Recommended Game",
+      "avgRating": 8.5,
+      "imagePath": "http://example.com/image.jpg"
+    }
+  ]
+}`
+## Patch Endpoints 
+- PATCH /api/games/{id}
+  Description: Updates the details of a specific game by ID
+  Request Body:
+  `{
+    "name": "Updated Game Name",
+    "avgRating": 9.0
+  }`
+- Response: JSON object of the updated game
+`{
+    "id": "12345",
+    "name": "Updated Game Name",
+    "avgRating": 9.0
+}`
+  
+## Known Bugs and Roadmap
+1. Quiz Submission Errors
+   Description: Some users experience errors when submitting the quiz form
+   Workaround: Ensure all fields are filled correctly.
+
+## Roadmap for Future Development
+1. Feature Enhancements:
+     - Implement a game search functionality
+     - Add user profile and game review features
+2. Performance Improvements:
+     - Optimize the database queries
+3. Fix Bugs 
+   
+   
