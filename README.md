@@ -24,7 +24,8 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 ## Vercel Link
+https://inst-377-board-game-recommender.vercel.app/
 
 ## Target Browsers: 
-IOS or Android
+Web: Firefox and Chrome
 
